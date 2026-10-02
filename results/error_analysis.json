@@ -1,0 +1,179 @@
+{
+ "run": "test__rag__qwen2.5-7b.jsonl",
+ "n_questions": 100,
+ "n_not_correct": 59,
+ "buckets": {
+  "routing error": {
+   "count": 0,
+   "ids": [],
+   "examples": []
+  },
+  "retrieval miss": {
+   "count": 25,
+   "ids": [
+    "financebench_id_04672",
+    "financebench_id_01865",
+    "financebench_id_07507",
+    "financebench_id_00438",
+    "financebench_id_00222",
+    "financebench_id_00720",
+    "financebench_id_01964",
+    "financebench_id_01981",
+    "financebench_id_00685",
+    "financebench_id_00288",
+    "financebench_id_01902",
+    "financebench_id_00585",
+    "financebench_id_00005",
+    "financebench_id_00790",
+    "financebench_id_04103",
+    "financebench_id_00669",
+    "financebench_id_02119",
+    "financebench_id_00080",
+    "financebench_id_04980",
+    "financebench_id_04481",
+    "financebench_id_00724",
+    "financebench_id_00601",
+    "financebench_id_00216",
+    "financebench_id_06247",
+    "financebench_id_04784"
+   ],
+   "examples": [
+    {
+     "id": "financebench_id_04672",
+     "question": "Assume that you are a public equities analyst. Answer the following question by primarily using information that is shown in the balance sheet: what is the year end FY2018 net PPNE for 3M? Answer in USD billions.",
+     "gold": "$8.70",
+     "answer": "Reasoning: To calculate the net property, plant, and equipment (PP&E) for 3M as of December 31, 2018, we need to use the balance sheet information. The balance sheet does not directly provide the PP&E value, but it does provide the total assets and the breakdown of current and non-current assets. We can infer the PP&E by subtracting current assets and intangible assets from total assets.\n\nFrom the balance sheet, we have:\n- Total assets as of December 31, 2018: $36.5 billion [3M_2018_10K p.13]\n- Current assets as of December 31, 2018: $13.7 billion [3M_2018_10K p.13]\n- Intangible assets as of December 31, 2018: $1.285 billion [3M_2018_10K p.15]\n\nWe can calculate the net PP&E as follows:\nNet PP&E = Total assets - Current assets - Intangible assets\nNet PP&E = $36.5 billion - $13.7 billion - $1.285 billion\nNet PP&E = $21.515 billion\n\nAnswer: The year-end FY2018 net PPNE for 3M is $21.515 billion [3M_2018_10K p.13, p.15].",
+     "label": "incorrect",
+     "note": "gold page(s) [('3M_2018_10K', 57)] not in context [('3M_2018_10K', 43), ('3M_2018_10K', 15), ('3M_2018_10K', 12), ('3M_2018_10K', 13), ('3M_2018_10K', 86), ('3M_2018_10K', 43), ('3M_2018_10K', 46), ('3M_2018_10K', 107), ('3M_2018_10K', 40), ('3M_2018_10K', 16)]"
+    },
+    {
+     "id": "financebench_id_01865",
+     "question": "If we exclude the impact of M&A, which segment has dragged down 3M's overall growth in 2022?",
+     "gold": "The consumer segment shrunk by 0.9% organically.",
+     "answer": "Reasoning: The documents do not provide specific segment-level financial data for 2022 that would allow us to determine which segment has dragged down 3M's overall growth, excluding the impact of M&A. The documents mention divestitures and acquisitions but do not break down the financial performance of each segment.\n\nAnswer: I don't know",
+     "label": "refused",
+     "note": "gold page(s) [('3M_2022_10K', 24)] not in context [('3M_2022_10K', 18), ('3M_2022_10K', 52), ('3M_2022_10K', 19), ('3M_2022_10K', 20), ('3M_2022_10K', 60), ('3M_2022_10K', 3), ('3M_2022_10K', 60), ('3M_2022_10K', 33), ('3M_2022_10K', 120), ('3M_2022_10K', 3)]"
+    },
+    {
+     "id": "financebench_id_07507",
+     "question": "What is Adobe's year-over-year change in unadjusted operating income from FY2015 to FY2016 (in units of percents and round to one decimal place)? Give a solution to the question by using the income statement.",
+     "gold": "65.4%",
+     "answer": "Reasoning: To calculate the year-over-year change in unadjusted operating income from FY2015 to FY2016, we need to find the net income for both years. The net income for FY2016 is $1,168,782 thousand [ADOBE_2016_10K p.35], and for FY2015, it is $629,551 thousand [ADOBE_2016_10K p.35]. The formula to calculate the year-over-year change in percentage is: ((Net income in year 2 - Net income in year 1) / Net income in year 1) * 100.\n\nAnswer: ((1,168,782 - 629,551) / 629,551) * 100 = 85.5% [ADOBE_2016_10K p.35]",
+     "label": "incorrect",
+     "note": "gold page(s) [('ADOBE_2016_10K', 61)] not in context [('ADOBE_2016_10K', 64), ('ADOBE_2016_10K', 35), ('ADOBE_2016_10K', 51), ('ADOBE_2016_10K', 62), ('ADOBE_2016_10K', 86), ('ADOBE_2016_10K', 50), ('ADOBE_2016_10K', 65), ('ADOBE_2016_10K', 100), ('ADOBE_2016_10K', 101), ('ADOBE_2016_10K', 51)]"
+    }
+   ]
+  },
+  "refusal": {
+   "count": 11,
+   "ids": [
+    "financebench_id_00941",
+    "financebench_id_01319",
+    "financebench_id_01079",
+    "financebench_id_03069",
+    "financebench_id_01077",
+    "financebench_id_04660",
+    "financebench_id_01244",
+    "financebench_id_10499",
+    "financebench_id_00735",
+    "financebench_id_02419",
+    "financebench_id_00606"
+   ],
+   "examples": [
+    {
+     "id": "financebench_id_00941",
+     "question": "Which debt securities are registered to trade on a national securities exchange under 3M's name as of Q2 of 2023?",
+     "gold": "Following debt securities registered under 3M's name are listed to trade on the New York Stock Exchange:\n-1.500% Notes due 2026 (Trading Symbol: MMM26)\n-1.750% Notes due 2030 (Trading Symbol: MMM30)\n-1.500% Notes due 2031 (Trading Symbol: MMM31)",
+     "answer": "Reasoning: The documents do not provide a list of specific debt securities that are registered to trade on a national securities exchange under 3M's name. The document mentions a shelf registration statement for debt or equity securities, but it does not specify which securities are currently registered.\n\nAnswer: I don't know",
+     "label": "refused",
+     "note": "gold page was in the context, model said I don't know"
+    },
+    {
+     "id": "financebench_id_01319",
+     "question": "What is the quantity of restructuring costs directly outlined in AES Corporation's income statements for FY2022? If restructuring costs are not explicitly outlined then state 0.",
+     "gold": "0",
+     "answer": "Reasoning: The documents do not explicitly mention any restructuring costs directly in the income statements for FY2022. The 2022 10-K mentions that the Company changed the definitions of certain metrics to remove adjustments for costs directly associated with a major restructuring program, but it does not provide specific restructuring costs in the income statement.\n\nAnswer: I don't know",
+     "label": "refused",
+     "note": "gold page was in the context, model said I don't know"
+    },
+    {
+     "id": "financebench_id_01079",
+     "question": "What are major acquisitions that AMCOR has done in FY2023, FY2022 and FY2021?",
+     "gold": "Amcor completed these acquisitions during FY2023:\n-100% equity interest of a flexibles manufacturing company in the Czech Republic\n- 100% equity interest in a medical device packaging manufacturing site in\nShanghai, China.\n-acquisition of a New Zealand-based leading manufacturer of state-of-the-art, automated protein\npackaging machines.",
+     "answer": "Reasoning: The documents provide information on acquisitions for FY2023 and FY2022. There is no information provided for FY2021 acquisitions.\n\n[AMCOR_2023_10K p.63] mentions acquisitions in FY2023 and FY2022:\n- On August 1, 2022, AMCOR acquired 100% equity interest in a Czech Republic company for $59 million, with a deferred payment of $5 million.\n- On March 17, 2023, AMCOR acquired 100% equity interest in a medical device packaging manufacturing site in Shanghai, China, for $60 million, with $20 million contingent consideration.\n\nAnswer: In FY2023, AMCOR acquired a medical device packaging manufacturing site in Shanghai, China, for $60 million, and in FY2022, AMCOR acquired a Czech Republic company for $59 million. I don't know",
+     "label": "refused",
+     "note": "gold page was in the context, model said I don't know"
+    }
+   ]
+  },
+  "judge disagreement": {
+   "count": 0,
+   "ids": [],
+   "examples": []
+  },
+  "reading/calculation error": {
+   "count": 23,
+   "ids": [
+    "financebench_id_03856",
+    "financebench_id_00591",
+    "financebench_id_06655",
+    "financebench_id_01279",
+    "financebench_id_00476",
+    "financebench_id_01028",
+    "financebench_id_05718",
+    "financebench_id_00070",
+    "financebench_id_00460",
+    "financebench_id_03838",
+    "financebench_id_07661",
+    "financebench_id_03473",
+    "financebench_id_05915",
+    "financebench_id_10136",
+    "financebench_id_00299",
+    "financebench_id_00394",
+    "financebench_id_04171",
+    "financebench_id_01254",
+    "financebench_id_00882",
+    "financebench_id_02416",
+    "financebench_id_00605",
+    "financebench_id_02024",
+    "financebench_id_00566"
+   ],
+   "examples": [
+    {
+     "id": "financebench_id_03856",
+     "question": "What is the FY2017 operating cash flow ratio for Adobe? Operating cash flow ratio is defined as: cash from operations / total current liabilities. Round your answer to two decimal places. Please utilize information provided primarily within the balance sheet and the cash flow statement.",
+     "gold": "0.83",
+     "answer": "Reasoning: To calculate the operating cash flow ratio for FY2017, we need the cash from operations and total current liabilities for that year. From the cash flow statement, we can see that the net cash provided by operating activities for FY2017 is $2,912,853,000 [ADOBE_2017_10K p.60]. From the balance sheet, we can see that the total current liabilities for FY2017 are $1,183,700,000 [ADOBE_2017_10K p.57].\n\nNow, we can calculate the operating cash flow ratio:\n\\[ \\text{Operating Cash Flow Ratio} = \\frac{\\text{Cash from Operations}}{\\text{Total Current Liabilities}} = \\frac{2,912,853,000}{1,183,700,000} \\approx 2.46 \\]\n\nAnswer: 2.46 [ADOBE_2017_10K p.60, p.57]",
+     "label": "incorrect",
+     "note": "auto label incorrect (numeric). "
+    },
+    {
+     "id": "financebench_id_00591",
+     "question": "Does Adobe have an improving Free cashflow conversion as of FY2022?",
+     "gold": "Yes, the FCF conversion (using net income as the denominator) for Adobe has improved by ~13% from 143% in 2021 to 156% in 2022",
+     "answer": "Reasoning: The document [ADOBE_2022_10K p.56] provides the cash flows from operating activities for the years ended December 2, 2022, December 3, 2021, and November 27, 2020. We can use the net income and the net cash provided by operating activities to calculate the free cash flow conversion ratio for each year.\n\nFree cash flow conversion ratio is calculated as:\n\\[ \\text{Free Cash Flow Conversion Ratio} = \\frac{\\text{Net Cash Provided by Operating Activities}}{\\text{Net Income}} \\]\n\nFor the year ended December 2, 2022:\n\\[ \\text{Free Cash Flow Conversion Ratio} = \\frac{3,238}{4,756} \\approx 0.68 \\]\n\nFor the year ended December 3, 2021:\n\\[ \\text{Free Cash Flow Conversion Ratio} = \\frac{2,984}{4,822} \\approx 0.62 \\]\n\nFor the year ended November 27, 2020:\n\\[ \\text{Free Cash Flow Conversion Ratio} = \\frac{2,855}{5,260} \\approx 0.54 \\]\n\nAnswer: Yes, Adobe has an improving Free cashflow conversion as of FY2022, as the ratio increased from 0.54 in FY2020 to 0.62 in FY2021 and further to 0.68 in FY2022. [ADOBE_2022_10K p.56]",
+     "label": "partially_correct",
+     "note": "auto label partially_correct (judge). The model's answer correctly concludes that Adobe's Free cashflow conversion has improved, but it uses a different ratio (Free Cash Flow Conversion Ratio) and different years (FY2020, FY2021, FY2022) compared to the gold answer."
+    },
+    {
+     "id": "financebench_id_06655",
+     "question": "What is Amazon's FY2017 days payable outstanding (DPO)? DPO is defined as: 365 * (average accounts payable between FY2016 and FY2017) / (FY2017 COGS + change in inventory between FY2016 and FY2017). Round your answer to two decimal places. Address the question by using the line items and information shown within the balance sheet and the P&L statement.",
+     "gold": "93.86",
+     "answer": "Reasoning: To calculate the days payable outstanding (DPO) for FY2017, we need to use the formula: 365 * (average accounts payable between FY2016 and FY2017) / (FY2017 COGS + change in inventory between FY2016 and FY2017).\n\nFirst, we need to find the COGS for FY2017. COGS can be derived from the operating cash flow section of the cash flow statement, which is the net income plus non-cash expenses and changes in working capital. However, the documents do not provide a direct COGS figure. Instead, we can use the change in accounts payable and the change in inventory to infer the DPO.\n\nFrom the cash flow statement, we can see:\n- Accounts payable in 2016: $34,616 million\n- Accounts payable in 2017: $57,883 million\n- Change in accounts payable: $57,883 - $34,616 = $23,267 million\n\n- Inventory in 2016: $11,461 million\n- Inventory in 2017: $16,047 million\n- Change in inventory: $16,047 - $11,461 = $4,586 million\n\nUsing the formula for DPO:\n\\[ \\text{DPO} = \\frac{365 \\times \\text{Average Accounts Payable}}{\\text{COGS} + \\text{Change in Inventory}} \\]\n\nSince the COGS is not directly provided, we can use the change in accounts payable as a proxy for the COGS for the purpose of calculating DPO:\n\\[ \\text{DPO} = \\frac{365 \\times \\frac{(34,616 + 57,883)}{2}}{23,267 + 4,586} \\]\n\\[ \\text{DPO} = \\frac{365 \\times \\frac{92,499}{2}}{27,853} \\]\n\\[ \\text{DPO} = \\frac{365 \\times 46,249.5}{27,853} \\]\n\\[ \\text{DPO} = \\frac{16,938,682.5}{27,853} \\]\n\\[ \\text{DPO} = 606.24 \\]\n\nAnswer: 606.24 [AMAZON_2017_10K p.36, p.41]",
+     "label": "incorrect",
+     "note": "auto label incorrect (numeric). "
+    }
+   ]
+  }
+ },
+ "hit_token_cap": {
+  "cap": 768,
+  "count": 1,
+  "ids_labels": [
+   [
+    "financebench_id_04103",
+    "incorrect"
+   ]
+  ]
+ }
+}

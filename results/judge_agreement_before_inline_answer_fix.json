@@ -1,0 +1,107 @@
+{
+ "n": 30,
+ "agreement": 0.6666666666666666,
+ "kappa": 0.4923857868020304,
+ "binary_agreement": 0.8,
+ "binary_kappa": 0.6153846153846155,
+ "confusion_human_rows_judge_cols": {
+  "correct": {
+   "correct": 12,
+   "partially_correct": 0,
+   "incorrect": 0,
+   "refused": 0
+  },
+  "partially_correct": {
+   "correct": 5,
+   "partially_correct": 0,
+   "incorrect": 0,
+   "refused": 0
+  },
+  "incorrect": {
+   "correct": 1,
+   "partially_correct": 0,
+   "incorrect": 7,
+   "refused": 0
+  },
+  "refused": {
+   "correct": 0,
+   "partially_correct": 0,
+   "incorrect": 4,
+   "refused": 1
+  }
+ },
+ "judge_more_lenient": 10,
+ "disagreements": [
+  {
+   "run": "test__closed_book__qwen2.5-7b.jsonl",
+   "id": "financebench_id_00790",
+   "human": "partially_correct",
+   "judge": "correct",
+   "note": "conclusion 'Yes' matches gold, but the supporting figures (total assets 122,282, revenue 73,682) are invented; real FY2022 values are 228,275 / 322,467"
+  },
+  {
+   "run": "test__rag__qwen2.5-3b.jsonl",
+   "id": "financebench_id_02049",
+   "human": "refused",
+   "judge": "incorrect",
+   "note": "reasoning quotes the $7m VaR decrease, but the final answer is I don't know"
+  },
+  {
+   "run": "test__oracle__qwen2.5-7b.jsonl",
+   "id": "financebench_id_00222",
+   "human": "partially_correct",
+   "judge": "correct",
+   "note": "conclusion 'healthy' matches, but quick ratio 1.76 (current assets minus inventory, so prepaid included) vs gold 1.57"
+  },
+  {
+   "run": "test__rag__qwen2.5-3b.jsonl",
+   "id": "financebench_id_00995",
+   "human": "refused",
+   "judge": "incorrect",
+   "note": "reasoning lists the products, final answer I don't know"
+  },
+  {
+   "run": "test__oracle__qwen2.5-3b.jsonl",
+   "id": "financebench_id_01858",
+   "human": "refused",
+   "judge": "incorrect",
+   "note": "I don't know although the evidence states 65 consecutive years of increases"
+  },
+  {
+   "run": "test__rag__qwen2.5-3b.jsonl",
+   "id": "financebench_id_01935",
+   "human": "refused",
+   "judge": "incorrect",
+   "note": "quotes the right passage, final answer I don't know"
+  },
+  {
+   "run": "test__rag__qwen2.5-7b.jsonl",
+   "id": "financebench_id_01936",
+   "human": "incorrect",
+   "judge": "correct",
+   "note": "uses the June 30, 2023 balance ($150m) instead of Dec 31, 2022 ($93m); misses the key point that ~87% is employee costs"
+  },
+  {
+   "run": "test__oracle__qwen2.5-3b.jsonl",
+   "id": "financebench_id_01107",
+   "human": "partially_correct",
+   "judge": "correct",
+   "note": "yes, and mentions PBM/rebate and opioid litigation, but not usual-and-customary pricing nor the settlement amounts"
+  },
+  {
+   "run": "test__rag__qwen2.5-7b.jsonl",
+   "id": "financebench_id_01107",
+   "human": "partially_correct",
+   "judge": "correct",
+   "note": "names opioid and prescription-processing litigation, misses PBM/rebate litigation and amounts"
+  },
+  {
+   "run": "test__rag__qwen2.5-7b.jsonl",
+   "id": "financebench_id_00494",
+   "human": "partially_correct",
+   "judge": "correct",
+   "note": "737 and 787 increases right, misses the 777X production restart"
+  }
+ ],
+ "note": "Human labels by the developer (not independent annotators), made blind to judge labels."
+}

@@ -1,0 +1,27 @@
+{
+ "criterion": "max dev page_hit@5, then MRR@10, then speed",
+ "chosen": {
+  "size": 1024,
+  "method": "hybrid",
+  "rerank": false,
+  "mode": "routed:company_year",
+  "rrf_k": 60,
+  "fusion_depth": 100,
+  "rerank_depth": 30,
+  "weights": [
+   1.0,
+   2.0
+  ]
+ },
+ "dev_metrics": {
+  "page_hit@1": 0.22,
+  "doc_hit@1": 0.88,
+  "page_hit@3": 0.42,
+  "doc_hit@3": 0.92,
+  "page_hit@5": 0.54,
+  "doc_hit@5": 0.96,
+  "page_hit@10": 0.76,
+  "doc_hit@10": 0.98,
+  "mrr@10": 0.3627063492063492
+ }
+}

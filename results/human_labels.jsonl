@@ -1,0 +1,30 @@
+{"run": "test__oracle__qwen2.5-7b.jsonl", "id": "financebench_id_01491", "label": "correct", "note": "$13.2 billion, matches gold and evidence"}
+{"run": "test__oracle__qwen2.5-3b.jsonl", "id": "financebench_id_00882", "label": "correct", "note": "4.2bn + 4.2bn = $8.4bn, matches gold"}
+{"run": "test__oracle__qwen2.5-7b.jsonl", "id": "financebench_id_00605", "label": "correct", "note": "328.1/900 = 36.46% ~ gold 36%; it calls the $900m the FY2023 outlook, but the fiscal-2022 actual is also $900.0m, so the number is right"}
+{"run": "test__rag__qwen2.5-7b.jsonl", "id": "financebench_id_01491", "label": "correct", "note": "$13.2 billion, matches gold"}
+{"run": "test__closed_book__qwen2.5-7b.jsonl", "id": "financebench_id_00790", "label": "partially_correct", "note": "conclusion 'Yes' matches gold, but the supporting figures (total assets 122,282, revenue 73,682) are invented; real FY2022 values are 228,275 / 322,467"}
+{"run": "test__oracle__qwen2.5-3b.jsonl", "id": "financebench_id_00438", "label": "incorrect", "note": "says margin is improving; gold says it declined (36.8% -> 34.6%); also computes a negative FY2022 margin"}
+{"run": "test__rag__qwen2.5-3b.jsonl", "id": "financebench_id_00566", "label": "refused", "note": "final answer I don't know (and invented debt totals in the reasoning)"}
+{"run": "test__oracle__qwen2.5-3b.jsonl", "id": "financebench_id_01275", "label": "incorrect", "note": "picks investing activities; gold is operating activities ($1,824m)"}
+{"run": "test__oracle__qwen2.5-7b.jsonl", "id": "financebench_id_01482", "label": "correct", "note": "defeated, with the right vote counts"}
+{"run": "test__rag__qwen2.5-7b.jsonl", "id": "financebench_id_01028", "label": "incorrect", "note": "lists UK/EU/Australia/Japan/Canada/Mexico (billed-business jurisdictions); gold is the segments US, EMEA, APAC, LACC; omits the US"}
+{"run": "test__closed_book__qwen2.5-7b.jsonl", "id": "financebench_id_00552", "label": "incorrect", "note": "uses hypothetical numbers and concludes debt increased; gold: decreased by $2.5bn"}
+{"run": "test__rag__qwen2.5-3b.jsonl", "id": "financebench_id_02049", "label": "refused", "note": "reasoning quotes the $7m VaR decrease, but the final answer is I don't know"}
+{"run": "test__oracle__qwen2.5-7b.jsonl", "id": "financebench_id_00222", "label": "partially_correct", "note": "conclusion 'healthy' matches, but quick ratio 1.76 (current assets minus inventory, so prepaid included) vs gold 1.57"}
+{"run": "test__closed_book__qwen2.5-7b.jsonl", "id": "financebench_id_01077", "label": "incorrect", "note": "invented acquisitions (ShopRunner, Haier USA); gold: Current Health and Yardbird in FY2022"}
+{"run": "test__oracle__qwen2.5-3b.jsonl", "id": "financebench_id_01964", "label": "correct", "note": "customer deposits $110,239m"}
+{"run": "test__rag__qwen2.5-3b.jsonl", "id": "financebench_id_00995", "label": "refused", "note": "reasoning lists the products, final answer I don't know"}
+{"run": "test__rag__qwen2.5-3b.jsonl", "id": "financebench_id_01858", "label": "correct", "note": "yes, 65th consecutive year of dividend increases"}
+{"run": "test__oracle__qwen2.5-3b.jsonl", "id": "financebench_id_01858", "label": "refused", "note": "I don't know although the evidence states 65 consecutive years of increases"}
+{"run": "test__oracle__qwen2.5-7b.jsonl", "id": "financebench_id_01351", "label": "correct", "note": "24.6% -> 21.6%, change of 3.0 points"}
+{"run": "test__oracle__qwen2.5-3b.jsonl", "id": "financebench_id_01981", "label": "correct", "note": "yes, retention remained high"}
+{"run": "test__rag__qwen2.5-7b.jsonl", "id": "financebench_id_01935", "label": "correct", "note": "substitution of issuer and assumption of covenants under the supplemental indentures = gold; the extra claim about issuing new notes is a slight misreading"}
+{"run": "test__rag__qwen2.5-3b.jsonl", "id": "financebench_id_01935", "label": "refused", "note": "quotes the right passage, final answer I don't know"}
+{"run": "test__oracle__qwen2.5-3b.jsonl", "id": "financebench_id_01865", "label": "incorrect", "note": "says Safety and Industrial; gold is Consumer (-0.9% organic)"}
+{"run": "test__rag__qwen2.5-7b.jsonl", "id": "financebench_id_01936", "label": "incorrect", "note": "uses the June 30, 2023 balance ($150m) instead of Dec 31, 2022 ($93m); misses the key point that ~87% is employee costs"}
+{"run": "test__oracle__qwen2.5-3b.jsonl", "id": "financebench_id_01107", "label": "partially_correct", "note": "yes, and mentions PBM/rebate and opioid litigation, but not usual-and-customary pricing nor the settlement amounts"}
+{"run": "test__oracle__qwen2.5-7b.jsonl", "id": "financebench_id_01279", "label": "correct", "note": "operating activities $3,565m"}
+{"run": "test__rag__qwen2.5-7b.jsonl", "id": "financebench_id_01482", "label": "correct", "note": "defeated"}
+{"run": "test__rag__qwen2.5-7b.jsonl", "id": "financebench_id_01107", "label": "partially_correct", "note": "names opioid and prescription-processing litigation, misses PBM/rebate litigation and amounts"}
+{"run": "test__rag__qwen2.5-7b.jsonl", "id": "financebench_id_01279", "label": "incorrect", "note": "picks investing ($1,999m) over operating ($3,565m) after a wrong absolute-value comparison"}
+{"run": "test__rag__qwen2.5-7b.jsonl", "id": "financebench_id_00494", "label": "partially_correct", "note": "737 and 787 increases right, misses the 777X production restart"}

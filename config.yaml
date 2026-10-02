@@ -1,0 +1,56 @@
+# Single config for the FinanceBench RAG project.
+# Paths are relative to the project root (the folder containing this file).
+
+paths:
+  raw: data/raw
+  pdfs: data/raw/pdfs
+  processed: data/processed
+  index: data/index
+  results: results
+  traces_db: data/traces.db
+  splits: data/splits.json
+  cache: data/cache
+
+data:
+  repo: patronus-ai/financebench
+  # Pinned commit of the FinanceBench repo, for reproducible downloads.
+  repo_commit: cc39aeb4afdf33909ee1412188bf89035950c2eb
+  split_seed: 42
+  dev_size: 50
+
+chunking:
+  # Sizes compared on dev. Overlap is a fraction of the chunk size.
+  sizes: [256, 512, 1024]
+  overlap_frac: 0.125
+  tokenizer: cl100k_base
+
+embedding:
+  model: BAAI/bge-small-en-v1.5
+  batch_size: 64
+
+reranker:
+  model: Xenova/ms-marco-MiniLM-L-6-v2
+
+# Retrieval settings used by the app and by the full-RAG generation eval.
+# These are chosen on DEV only (see results/retrieval_dev.csv and PROGRESS.md).
+retrieval:
+  chunk_size: 256       # context-budget decision on dev (results/context_budget_choice.json); page_hit@5 pick was 1024
+  method: hybrid        # bm25 | dense | hybrid
+  rerank: false         # the reranker did not help on dev (see results/retrieval_dev.csv)
+  mode: routed          # routed | shared
+  route_level: company_year   # company | company_year
+  weights: [1.0, 2.0]         # RRF weights (bm25, dense); dev-chosen
+  rrf_k: 60
+  fusion_depth: 100     # how many candidates each retriever contributes to RRF
+  rerank_depth: 30      # how many fused candidates the cross-encoder rescored
+  top_k: 10             # chunks given to the LLM (cs256 x 10 = ~2.3k tokens; was cs1024 x 5 = ~3.7k)
+
+llm:
+  base_url: http://127.0.0.1:11434   # not localhost: on Windows it adds ~2 s per request (IPv6 first)
+  model: qwen2.5:7b      # switch to qwen2.5:3b (or a bigger model on a GPU) here
+  models_evaluated: [qwen2.5:7b, qwen2.5:3b]
+  judge_model: qwen2.5:7b
+  temperature: 0
+  seed: 42
+  num_predict: 768       # reasoning-first answers need room (dev: 476 tokens seen)
+  request_timeout_s: 1800

@@ -1,0 +1,19 @@
+# Environments, caches, local state
+.venv/
+__pycache__/
+.pytest_cache/
+.llm_lock
+*.db
+*.log
+*.out
+results/logs/
+logs/
+.env
+.env.*
+
+# Data that is downloaded or rebuilt by the scripts (FinanceBench is CC BY-NC; not redistributed)
+data/raw/
+data/cache/
+data/index/
+data/processed/
+data/pdfs/

@@ -1,0 +1,12 @@
+[server]
+headless = true
+fileWatcherType = "none"
+
+[browser]
+gatherUsageStats = false
+
+[theme]
+base = "dark"
+
+[client]
+toolbarMode = "viewer"

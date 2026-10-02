@@ -1,0 +1,220 @@
+{
+ "run": "test__rag__qwen2.5-3b.jsonl",
+ "n_questions": 100,
+ "n_not_correct": 84,
+ "buckets": {
+  "routing error": {
+   "count": 0,
+   "ids": [],
+   "examples": []
+  },
+  "retrieval miss": {
+   "count": 32,
+   "ids": [
+    "financebench_id_04672",
+    "financebench_id_01226",
+    "financebench_id_01865",
+    "financebench_id_07507",
+    "financebench_id_00438",
+    "financebench_id_00684",
+    "financebench_id_00222",
+    "financebench_id_00720",
+    "financebench_id_01351",
+    "financebench_id_01964",
+    "financebench_id_00685",
+    "financebench_id_00288",
+    "financebench_id_01902",
+    "financebench_id_00585",
+    "financebench_id_00005",
+    "financebench_id_04103",
+    "financebench_id_00669",
+    "financebench_id_01484",
+    "financebench_id_02119",
+    "financebench_id_01912",
+    "financebench_id_00552",
+    "financebench_id_04302",
+    "financebench_id_00080",
+    "financebench_id_04980",
+    "financebench_id_01328",
+    "financebench_id_04481",
+    "financebench_id_00302",
+    "financebench_id_00724",
+    "financebench_id_00601",
+    "financebench_id_00216",
+    "financebench_id_06247",
+    "financebench_id_04784"
+   ],
+   "examples": [
+    {
+     "id": "financebench_id_04672",
+     "question": "Assume that you are a public equities analyst. Answer the following question by primarily using information that is shown in the balance sheet: what is the year end FY2018 net PPNE for 3M? Answer in USD billions.",
+     "gold": "$8.70",
+     "answer": "Reasoning: [3M_2018_10K p.43] provides net debt and its components. To find net PPNE, we need to calculate net debt as total debt less cash, cash equivalents, and current and long-term marketable securities. [3M_2018_10K p.43] states total debt as $14,622 million and cash, cash equivalents, and marketable securities as $3,270 million. [3M_2018_10K p.43] also states net debt as $11,352 million. Using the formula: Net Debt = Total Debt - Cash, Cash Equivalents, and Marketable Securities, we can calculate net PPNE for FY2018.\n\nAnswer: Answer: I don't know Reasoning: The provided documents do not contain the specific information needed to calculate the net PPNE for FY2018.",
+     "label": "refused",
+     "note": "gold page(s) [('3M_2018_10K', 57)] not in context [('3M_2018_10K', 43), ('3M_2018_10K', 15), ('3M_2018_10K', 12), ('3M_2018_10K', 13), ('3M_2018_10K', 86), ('3M_2018_10K', 43), ('3M_2018_10K', 46), ('3M_2018_10K', 107), ('3M_2018_10K', 40), ('3M_2018_10K', 16)]"
+    },
+    {
+     "id": "financebench_id_01226",
+     "question": "What drove operating margin change as of FY2022 for 3M? If operating margin is not a useful metric for a company like this, then please state that and explain why.",
+     "gold": "Operating Margin for 3M in FY2022 has decreased by 1.7% primarily due to: \n-Decrease in gross Margin\n-mostly one-off charges including Combat Arms Earplugs litigation, impairment related to exiting PFAS manufacturing, costs related to exiting Russia and divestiture-related restructuring\ncharges",
+     "answer": "Reasoning: [3M_2022_10K p.29] states that operating income margins decreased year-on-year due to increases in raw materials, logistics and special item costs for significant litigation; lower gain on sale of properties; and manufacturing productivity impacts. [3M_2022_10K p.20] mentions that the operating income margins and earnings per diluted share year-on-year were offset by manufacturing headwinds from global supply chain challenges and increased compensation/benefit costs. [3M_2022_10K p.18] indicates that 3M made changes in the measure of segment operating performance used by 3M’s chief operating decision maker, impacting 3M’s disclosed measure of segment profit/loss (business segment operating income). [3M_2022_10K p.19] provides a discussion related to the components of year-on-year changes in operating income margin and earnings per diluted share, including a benefit from a favorable Brazilian Supreme Court decision, investments in growth and sustainability, restructuring actions, and raw material and logistics costs. [3M_2022_10K p.30] states that business segment operating income margins increased year-on-year due to sales growth leverage, benefits from restructuring actions and lower related charges, and COVID impacts recognized on certain assets in 2020. Answer: I don't know",
+     "label": "refused",
+     "note": "gold page(s) [('3M_2022_10K', 26)] not in context [('3M_2022_10K', 29), ('3M_2022_10K', 19), ('3M_2022_10K', 120), ('3M_2022_10K', 29), ('3M_2022_10K', 18), ('3M_2022_10K', 19), ('3M_2022_10K', 20), ('3M_2022_10K', 30), ('3M_2022_10K', 52), ('3M_2022_10K', 27)]"
+    },
+    {
+     "id": "financebench_id_01865",
+     "question": "If we exclude the impact of M&A, which segment has dragged down 3M's overall growth in 2022?",
+     "gold": "The consumer segment shrunk by 0.9% organically.",
+     "answer": "Reasoning: [3M_2022_10K p.3] states that 3M manages its operations in four business segments: Safety and Industrial, Transportation and Electronics, Health Care, and Consumer. [3M_2022_10K p.19] provides operating income margin and earnings per share for 2022 and 2021. [3M_2022_10K p.60] discusses acquisitions and divestitures, noting that in 2022, 3M completed the sale of its floor products business in Western Europe, which is part of the Consumer business. [3M_2022_10K p.3] mentions that in July 2022, 3M announced its intention to spin off the Health Care business as a separate public company. [3M_2022_10K p.120] indicates that transactions among reportable segments are recorded at cost, and management does not represent that these segments, if operated independently, would report the operating income information shown. [3M_2022_10K p.33] provides information on capital spending and property, plant and equipment for each geographic area. \n\nAnswer: I don't know",
+     "label": "refused",
+     "note": "gold page(s) [('3M_2022_10K', 24)] not in context [('3M_2022_10K', 18), ('3M_2022_10K', 52), ('3M_2022_10K', 19), ('3M_2022_10K', 20), ('3M_2022_10K', 60), ('3M_2022_10K', 3), ('3M_2022_10K', 60), ('3M_2022_10K', 33), ('3M_2022_10K', 120), ('3M_2022_10K', 3)]"
+    }
+   ]
+  },
+  "refusal": {
+   "count": 37,
+   "ids": [
+    "financebench_id_00941",
+    "financebench_id_02987",
+    "financebench_id_00591",
+    "financebench_id_01319",
+    "financebench_id_06655",
+    "financebench_id_01935",
+    "financebench_id_01079",
+    "financebench_id_01148",
+    "financebench_id_01936",
+    "financebench_id_00995",
+    "financebench_id_01279",
+    "financebench_id_00476",
+    "financebench_id_01028",
+    "financebench_id_04254",
+    "financebench_id_00070",
+    "financebench_id_04417",
+    "financebench_id_01077",
+    "financebench_id_01275",
+    "financebench_id_00460",
+    "financebench_id_04660",
+    "financebench_id_01091",
+    "financebench_id_00494",
+    "financebench_id_09724",
+    "financebench_id_01346",
+    "financebench_id_01107",
+    "financebench_id_01244",
+    "financebench_id_02049",
+    "financebench_id_10499",
+    "financebench_id_03718",
+    "financebench_id_00735",
+    "financebench_id_01482",
+    "financebench_id_01476",
+    "financebench_id_02419",
+    "financebench_id_00605",
+    "financebench_id_00606",
+    "financebench_id_00859",
+    "financebench_id_00566"
+   ],
+   "examples": [
+    {
+     "id": "financebench_id_00941",
+     "question": "Which debt securities are registered to trade on a national securities exchange under 3M's name as of Q2 of 2023?",
+     "gold": "Following debt securities registered under 3M's name are listed to trade on the New York Stock Exchange:\n-1.500% Notes due 2026 (Trading Symbol: MMM26)\n-1.750% Notes due 2030 (Trading Symbol: MMM30)\n-1.500% Notes due 2031 (Trading Symbol: MMM31)",
+     "answer": "Reasoning: [3M_2023Q2_10Q p.18] states that the Company had a medium-term notes program up to the aggregate principal amount of $18 billion. [3M_2023Q2_10Q p.84] mentions that the Company had a $4.25 billion five-year revolving credit facility expiring in 2028. [3M_2023Q2_10Q p.20] indicates that the Company had a fixed-to-floating interest rate swap that was terminated in 2007 with respect to the Company's 30-year $220 million principal amount debenture due in 2028. These documents do not provide information on the registration of debt securities to trade on a national securities exchange as of Q2 of 2023.\n\nAnswer: I don't know",
+     "label": "refused",
+     "note": "gold page was in the context, model said I don't know"
+    },
+    {
+     "id": "financebench_id_02987",
+     "question": "What is the FY2019 fixed asset turnover ratio for Activision Blizzard? Fixed asset turnover ratio is defined as: FY2019 revenue / (average PP&E between FY2018 and FY2019). Round your answer to two decimal places. Base your judgments on the information provided primarily in the statement of income and the statement of financial position.",
+     "gold": "24.26",
+     "answer": "Reasoning: To calculate the fixed asset turnover ratio, we need the revenue and the average of property, plant, and equipment (PP&E) for the fiscal years 2018 and 2019. The revenue for 2019 is provided in the Reconciliation to consolidated net revenues table from [ACTIVISIONBLIZZARD_2019_10K p.101]. The PP&E for 2019 and 2018 are provided in the Consolidated Balance Sheets from [ACTIVISIONBLIZZARD_2019_10K p.90]. The average of PP&E is calculated as (PP&E 2019 + PP&E 2018) / 2. The fixed asset turnover ratio is then calculated as FY2019 revenue / (average PP&E between FY2018 and FY2019).\n\nAnswer: I don't know",
+     "label": "refused",
+     "note": "gold page was in the context, model said I don't know"
+    },
+    {
+     "id": "financebench_id_00591",
+     "question": "Does Adobe have an improving Free cashflow conversion as of FY2022?",
+     "gold": "Yes, the FCF conversion (using net income as the denominator) for Adobe has improved by ~13% from 143% in 2021 to 156% in 2022",
+     "answer": "Reasoning: [ADOBE_2022_10K p.56] shows cash flows from operating activities for Adobe. The cash flows from operating activities for FY2022 are $4,756 million, for FY2021 are $4,822 million, and for FY2020 are $5,260 million. The reduction in cash from operating activities is due to the reduction in trade receivables, net, which decreased from $106 million in FY2021 to $198 million in FY2022. The reduction in trade receivables could indicate an improvement in cash conversion as it suggests that the company is collecting its receivables faster. However, the overall cash flow from operating activities has decreased, which could indicate a decline in the company's ability to generate cash from its core business operations. \n\nAnswer: I don't know",
+     "label": "refused",
+     "note": "gold page was in the context, model said I don't know"
+    }
+   ]
+  },
+  "judge disagreement": {
+   "count": 0,
+   "ids": [],
+   "examples": []
+  },
+  "reading/calculation error": {
+   "count": 15,
+   "ids": [
+    "financebench_id_03856",
+    "financebench_id_03069",
+    "financebench_id_05718",
+    "financebench_id_03838",
+    "financebench_id_07661",
+    "financebench_id_03473",
+    "financebench_id_05915",
+    "financebench_id_10136",
+    "financebench_id_00299",
+    "financebench_id_00394",
+    "financebench_id_04171",
+    "financebench_id_04458",
+    "financebench_id_00882",
+    "financebench_id_02416",
+    "financebench_id_02024"
+   ],
+   "examples": [
+    {
+     "id": "financebench_id_03856",
+     "question": "What is the FY2017 operating cash flow ratio for Adobe? Operating cash flow ratio is defined as: cash from operations / total current liabilities. Round your answer to two decimal places. Please utilize information provided primarily within the balance sheet and the cash flow statement.",
+     "gold": "0.83",
+     "answer": "Reasoning: To calculate the operating cash flow ratio for Adobe in fiscal year 2017, we need to determine the cash from operations and total current liabilities. \n\nFrom the [ADOBE_2017_10K p.60], we find the cash from operating activities for fiscal year 2017 is $2,912,853 (in thousands). \n\nFrom the [ADOBE_2017_10K p.50], we find the total current liabilities for fiscal year 2017 are $5,839,774 (in thousands).\n\nUsing the formula: Operating Cash Flow Ratio = Cash from Operations / Total Current Liabilities\n\nAnswer: 0.49",
+     "label": "incorrect",
+     "note": "auto label incorrect (numeric). "
+    },
+    {
+     "id": "financebench_id_03069",
+     "question": "Answer the following question as if you are an equity research analyst and have lost internet connection so you do not have access to financial metric providers. According to the details clearly outlined within the P&L statement and the statement of cash flows, what is the FY2015 depreciation and amortization (D&A from cash flow statement) % margin for AMD?",
+     "gold": "4.2%",
+     "answer": "Reasoning: [AMD_2015_10K p.59] provides the depreciation and amortization (D&A) from the cash flow statement for the year ended December 26, 2015, which is $167 million. [AMD_2015_10K p.42] provides the cost of sales for the year ended December 26, 2015, which is $2,911 million. To calculate the D&A % margin, we use the formula: (D&A / Cost of Sales) * 100. Substituting the values, we get: (167 / 2911) * 100 = 5.73%. Answer: 5.73%",
+     "label": "incorrect",
+     "note": "auto label incorrect (numeric). "
+    },
+    {
+     "id": "financebench_id_05718",
+     "question": "How much (in USD billions) did American Water Works pay out in cash dividends for FY2020? Compute or extract the answer by primarily using the details outlined in the statement of cash flows.",
+     "gold": "$0.40",
+     "answer": "Reasoning: [AMERICANWATERWORKS_2020_10K p.85] shows net cash provided by financing activities for 2020 as $1,120 million. [AMERICANWATERWORKS_2020_10K p.67] provides a summary of cash flows from financing activities, including dividends paid, which is $389 million for 2020. [AMERICANWATERWORKS_2020_10K p.85] also shows cash provided by operating activities for 2020 as $1,426 million. The cash provided by operating activities is used to pay dividends, as stated in the [AMERICANWATERWORKS_2020_10K p.67] summary of cash flows from financing activities. Therefore, the dividends paid can be calculated as the net cash provided by financing activities minus the dividends paid, which is $1,120 million - $389 million = $731 million. Answer: 7.31 (USD billions)",
+     "label": "incorrect",
+     "note": "auto label incorrect (numeric). "
+    }
+   ]
+  }
+ },
+ "hit_token_cap": {
+  "cap": 768,
+  "count": 5,
+  "ids_labels": [
+   [
+    "financebench_id_00917",
+    "correct"
+   ],
+   [
+    "financebench_id_03473",
+    "incorrect"
+   ],
+   [
+    "financebench_id_05915",
+    "incorrect"
+   ],
+   [
+    "financebench_id_04103",
+    "incorrect"
+   ],
+   [
+    "financebench_id_00299",
+    "incorrect"
+   ]
+  ]
+ }
+}

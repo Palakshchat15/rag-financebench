@@ -1,0 +1,41 @@
+{
+ "machine": "Intel64 Family 6 Model 154 Stepping 4, GenuineIntel",
+ "results": [
+  {
+   "model": "qwen2.5:7b",
+   "prompt": "short",
+   "prompt_tokens": 40,
+   "completion_tokens": 44,
+   "prompt_tok_per_s": 65.0,
+   "gen_tok_per_s": 8.0,
+   "wall_s": 8.2
+  },
+  {
+   "model": "qwen2.5:7b",
+   "prompt": "long_1k",
+   "prompt_tokens": 1183,
+   "completion_tokens": 11,
+   "prompt_tok_per_s": 21.1,
+   "gen_tok_per_s": 6.8,
+   "wall_s": 59.7
+  },
+  {
+   "model": "qwen2.5:3b",
+   "prompt": "short",
+   "prompt_tokens": 40,
+   "completion_tokens": 52,
+   "prompt_tok_per_s": 148.9,
+   "gen_tok_per_s": 17.5,
+   "wall_s": 5.3
+  },
+  {
+   "model": "qwen2.5:3b",
+   "prompt": "long_1k",
+   "prompt_tokens": 1183,
+   "completion_tokens": 10,
+   "prompt_tok_per_s": 42.2,
+   "gen_tok_per_s": 13.3,
+   "wall_s": 30.9
+  }
+ ]
+}

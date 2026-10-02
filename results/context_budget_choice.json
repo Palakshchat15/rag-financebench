@@ -1,0 +1,21 @@
+{
+ "decision": "RAG context = top-10 chunks of the 256-token index (was top-5 of the 1024-token index)",
+ "why": "Owner asked for faster generation without losing quality. Chosen on DEV only: evidence recall per prompt token.",
+ "method_unchanged": "hybrid RRF (bm25 1, dense 2), routed company_year, no rerank",
+ "dev_retrieval": {
+  "cs1024_top5": {"page_hit": 0.54, "mean_chunk_tokens_cl100k": 3666},
+  "cs512_top7": {"page_hit": 0.52, "mean_chunk_tokens_cl100k": 3125},
+  "cs256_top9": {"page_hit": 0.56, "mean_chunk_tokens_cl100k": 2080},
+  "cs256_top10": {"page_hit": 0.60, "mean_chunk_tokens_cl100k": 2306},
+  "source": "results/context_budget_dev.csv (scripts/context_budget.py)"
+ },
+ "dev_generation_spot_check": {
+  "questions": "10 dev questions (every 5th dev question), qwen2.5:7b, prompt v4",
+  "cs1024_top5": {"correct_by_developer_reading": 3, "refused": 4, "mean_prompt_tokens": 4694, "mean_prefill_s": 297, "mean_total_s": 339},
+  "cs256_top10": {"correct_by_developer_reading": 3, "refused": 5, "mean_prompt_tokens": 3418, "mean_prefill_s": 219, "mean_total_s": 275},
+  "note": "Same 3 questions correct in both. Part of the cs256 run overlapped a CPU-heavy job from another project, so its times are, if anything, pessimistic.",
+  "files": ["results/gen/dev__rag-cs256k10__qwen2.5-7b.jsonl", "results/gen/dev__rag-cs1024k5__qwen2.5-7b.jsonl"]
+ },
+ "test_retrieval_of_new_config": "Already in results/retrieval_test.csv as the cs256 ablation row of the chosen method (scored in the one test retrieval run): page_hit@10 0.66, page_hit@5 0.53, MRR@10 0.370. Not used for the decision."
+}
+
