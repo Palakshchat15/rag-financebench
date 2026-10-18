@@ -291,6 +291,72 @@ The 3B's main failure is refusing although the answer is in front of it.
 
 So the cap is not a meaningful source of error for the 7B.
 
+## Vector database backends
+
+The dense side of retrieval can now run on a vector database instead of the NumPy matrix
+product. **NumPy stays the default** (`config.yaml` -> `retrieval.dense_backend: numpy`) and
+produced every number above; the other backends are optional additions, built and benchmarked
+on 2026-10-18 (GPU laptop, 8 GB RAM; pytest 104 passed with chromadb and faiss installed).
+
+| `dense_backend` | What it is | Router restriction |
+|---|---|---|
+| `numpy` (default) | exact dot product over `emb.npy` | boolean mask |
+| `chroma` | persistent ChromaDB collection (`data/index/chroma/cs256/`), HNSW, cosine; metadata `doc_name`, `company`, `year`, `doc_type`, `page` | Chroma `where` filter (`doc_name $in candidates`) |
+| `faiss_flat` | FAISS `IndexFlatIP` on the normalised vectors (exact) | FAISS `IDSelectorBatch` |
+| `faiss_hnsw` | FAISS `IndexHNSWFlat`, inner product (approximate) | FAISS `IDSelectorBatch` |
+
+All three are built from the existing embeddings (nothing is re-embedded), keep a mapping from
+vector id to `chunk_id`, and refuse to load if `emb.npy` changed since they were built. BM25,
+RRF fusion, routing and the reranker are the same for every backend. Code:
+`src/vector_backends.py`, `scripts/build_vector_index.py`, `scripts/bench_vector_backends.py`,
+tests in `tests/test_vector_backends.py` (they skip if chromadb / faiss are not installed).
+
+```powershell
+.venv\Scripts\python -m pip install -r requirements-vectordb.txt -c requirements.txt
+.venv\Scripts\python -m pytest -q tests\test_vector_backends.py
+.venv\Scripts\python scripts\build_vector_index.py                  # cs256: chroma, faiss_flat, faiss_hnsw
+.venv\Scripts\python scripts\bench_vector_backends.py               # dev + test -> results\vector_backends_*.csv
+```
+
+Benchmark: dev-chosen settings (cs256, RRF 1:2, fusion depth 100, routed company+year and shared
+store, no reranker), dense-only and hybrid. `overlap@10` is the share of the NumPy (exact) top 10
+that a backend also returns.
+
+| Backend (hybrid, routed, test) | page hit@5 | hit@10 | MRR@10 | overlap@10 vs NumPy | dense search p50 / p95 (ms) | build (s) | disk (MB) |
+|---|---|---|---|---|---|---|---|
+| numpy | 0.53 | 0.66 | 0.370 | 1.00 (reference) | 5.35 / 6.27 | (embeddings only) | 68.6 (`emb.npy`) |
+| chroma | 0.53 | 0.66 | 0.370 | 1.00 | 12.22 / 20.10 | 17.7 | 112.8 |
+| faiss_flat | 0.53 | 0.66 | 0.370 | 1.00 | 0.24 / 0.43 | 0.06 | 69.9 |
+| faiss_hnsw | 0.53 | 0.66 | 0.372 | 0.988 | 0.36 / 0.48 | 5.9 | 82.0 |
+
+Full tables (both splits, dense and hybrid, routed and shared): `results/vector_backends_dev.csv`,
+`results/vector_backends_test.csv`, `results/vector_backends_build.csv`. Index: cs256, 46,816
+vectors of dimension 384. Settings: Chroma HNSW cosine M 16 / ef_construction 200 / ef_search 200;
+FAISS HNSW M 32 / ef_construction 200 / ef_search 128.
+
+**Check passed:** the NumPy hybrid routed test row reproduces the cs256 test row of the retrieval
+table above (page hit@10 0.66, MRR 0.370), so the benchmark measures the same pipeline.
+
+**Reading the results:**
+- **Same retrieval quality on every backend.** Chroma and FAISS flat return exactly the NumPy
+  top 10 on test (overlap@10 1.00) and give identical page hit@k and MRR. FAISS HNSW is
+  approximate (overlap@10 0.988 hybrid, dense candidate overlap@100 0.947), but on these 100
+  questions that changes nothing measurable (MRR 0.372 vs 0.370; page hit@5/@10 equal). Dev
+  agrees up to small differences from a few swapped candidates: page hit@10 0.62 vs 0.60 (HNSW,
+  routed hybrid) and 0.42 vs 0.38 (Chroma and HNSW, shared hybrid).
+- **Speed depends on how the router filter is applied.** With the routed company+year filter,
+  FAISS with an `IDSelectorBatch` is fastest (0.24 ms p50 flat, 0.36 ms HNSW vs 5.35 ms NumPy),
+  while Chroma's `where` filter is the slowest (12.2 ms p50, 20.1 ms p95). Without the filter
+  (shared store) it is the other way round for Chroma: 1.5 ms vs 4.7 ms for NumPy, and FAISS flat
+  is slower (6.5 ms) because it scans all 46,816 vectors; HNSW stays at 0.30 ms.
+- **The dense search is not the bottleneck** at this size: the query embedding alone takes
+  10.4 ms p50, and on test every backend's whole retrieval call (BM25 + dense + RRF) stays under
+  23 ms p95 (dev: up to 31 ms for routed Chroma).
+- Build and load: Chroma 17.7 s build / 1.1 s load / 112.8 MB, FAISS flat 0.06 s / 0.21 s / 69.9 MB,
+  FAISS HNSW 5.9 s / 0.19 s / 82.0 MB, NumPy `emb.npy` 0.08 s load / 68.6 MB. NumPy stays the
+  default: at 47k vectors exact search is already fast, and a vector database pays off mainly with
+  larger corpora or metadata filtering outside this router.
+
 ## Design decisions
 
 - **Dev-only tuning.** Everything was chosen on the 50 dev questions and test was scored once:

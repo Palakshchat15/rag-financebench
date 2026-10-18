@@ -10,6 +10,8 @@ paths:
   traces_db: data/traces.db
   splits: data/splits.json
   cache: data/cache
+  chroma: data/index/chroma   # optional vector DB backends (scripts/build_vector_index.py)
+  faiss: data/index/faiss
 
 data:
   repo: patronus-ai/financebench
@@ -44,6 +46,23 @@ retrieval:
   fusion_depth: 100     # how many candidates each retriever contributes to RRF
   rerank_depth: 30      # how many fused candidates the cross-encoder rescored
   top_k: 10             # chunks given to the LLM (cs256 x 10 = ~2.3k tokens; was cs1024 x 5 = ~3.7k)
+  # Dense side of bm25/dense/hybrid retrieval: numpy | chroma | faiss_flat | faiss_hnsw.
+  # numpy (exact matrix product over emb.npy) produced every reported result; the others are
+  # optional (requirements-vectordb.txt, scripts/build_vector_index.py, bench_vector_backends.py).
+  dense_backend: numpy
+
+# Vector-database backends, built from the existing emb.npy (no re-embedding).
+vector_db:
+  chroma:               # persistent collection, metadata doc_name/company/year/doc_type/page
+    space: cosine
+    M: 16
+    ef_construction: 200
+    ef_search: 200
+    batch_size: 4096
+  faiss_hnsw:           # faiss_flat (IndexFlatIP) has no parameters
+    M: 32
+    ef_construction: 200
+    ef_search: 128      # raised to k when k is larger
 
 llm:
   base_url: http://127.0.0.1:11434   # not localhost: on Windows it adds ~2 s per request (IPv6 first)

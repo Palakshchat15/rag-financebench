@@ -63,9 +63,37 @@ def _topn(scores: np.ndarray, mask: np.ndarray | None, n: int) -> np.ndarray:
 
 
 class Retriever:
-    def __init__(self, index: Index):
+    """dense_backend: "numpy" (default; exact, every reported result) | "chroma" | "faiss_flat" |
+    "faiss_hnsw", or a ready DenseBackend object (tests). None = config.yaml
+    retrieval.dense_backend. Only the dense ranking changes; BM25 and RRF are shared."""
+
+    def __init__(self, index: Index, dense_backend=None):
         self.index = index
         self._rr_cache: dict = {}
+        if dense_backend is None:
+            dense_backend = load_config()["retrieval"].get("dense_backend", "numpy")
+        self._backend = None
+        if isinstance(dense_backend, str):
+            self.dense_backend = dense_backend
+            if dense_backend != "numpy":
+                from .vector_backends import load_backend
+
+                self._backend = load_backend(dense_backend, index)
+        else:
+            self._backend = dense_backend
+            self.dense_backend = getattr(dense_backend, "name", type(dense_backend).__name__)
+
+    def _dense_rank(self, query: str, qvec, mask, docs, n: int) -> list[tuple[int, float]]:
+        """Top-n dense candidates [(row, score)]. qvec = precomputed query embedding (optional)."""
+        if self._backend is None:      # original NumPy path, unchanged
+            s = self.index.dense_scores(query) if qvec is None else self.index.emb @ qvec
+            idx = _topn(s, mask, n)
+            return [(int(i), float(s[i])) for i in idx]
+        if qvec is None:
+            from .indexing import embed_query
+
+            qvec = embed_query(query)
+        return self._backend.search(qvec, n, docs)
 
     def doc_mask(self, docs: list[str] | None) -> np.ndarray | None:
         if not docs:
@@ -75,7 +103,7 @@ class Retriever:
     def search(self, query: str, method: str = "hybrid", docs: list[str] | None = None,
                rerank: bool = False, top_k: int = 10, fusion_depth: int = 100,
                rerank_depth: int = 30, rrf_k: int = 60,
-               weights: tuple[float, float] = (1.0, 1.0)) -> RetrievalResult:
+               weights: tuple[float, float] = (1.0, 1.0), qvec=None) -> RetrievalResult:
         t: dict = {}
         mask = self.doc_mask(docs)
         t0 = time.perf_counter()
@@ -85,14 +113,11 @@ class Retriever:
             idx = _topn(s, mask, depth)
             cand = [(int(i), float(s[i])) for i in idx]
         elif method == "dense":
-            s = self.index.dense_scores(query)
-            idx = _topn(s, mask, depth)
-            cand = [(int(i), float(s[i])) for i in idx]
+            cand = self._dense_rank(query, qvec, mask, docs, depth)
         elif method == "hybrid":
             sb = self.index.bm25_scores(query)
-            sd = self.index.dense_scores(query)
             rb = list(_topn(sb, mask, fusion_depth))
-            rd = list(_topn(sd, mask, fusion_depth))
+            rd = [i for i, _ in self._dense_rank(query, qvec, mask, docs, fusion_depth)]
             fused = rrf([[int(i) for i in rb], [int(i) for i in rd]], k=rrf_k, weights=list(weights))
             cand = [(i, s_) for i, s_ in fused[:depth]]
         else:

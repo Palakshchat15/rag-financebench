@@ -81,6 +81,17 @@ All commands run from this folder in PowerShell, using the project venv:
 - [x] 9. App verified 2026-09-30 (see end of file).
 - [x] 10. README complete (all results tables, judge validation, error analysis, design decisions,
       limitations, next steps, 8 GB section).
+- [x] 11. Upgrade (2026-10-17 code; RUN 2026-10-18): vector-DB dense backends (ChromaDB, FAISS flat/HNSW)
+      behind `retrieval.dense_backend` (default numpy = every reported result, unchanged).
+      Code: src/vector_backends.py, Retriever(index, dense_backend) + optional qvec in src/retrieval.py,
+      scripts/build_vector_index.py, scripts/bench_vector_backends.py, tests/test_vector_backends.py
+      (10 pass, 9 skip without chromadb/faiss; full suite 95 passed, 9 skipped), requirements-vectordb.txt.
+      Run order and checks: UPGRADE_NOTES.md. Results go to results/vector_backends_{dev,test,build}.csv.
+      Run 2026-10-18: pip install, pytest 104 passed, build (cs256, 46,816 vectors: chroma 17.7 s,
+      faiss_flat 0.06 s, faiss_hnsw 5.9 s), benchmark on dev + test. Check passed: numpy hybrid routed test
+      reproduces page hit@10 0.66 / MRR 0.370 of retrieval_test.csv; chroma and faiss_flat match it exactly
+      (overlap@10 1.0), faiss_hnsw overlap@10 0.988 (MRR 0.372). Dense search p50 routed: numpy 5.35 ms,
+      chroma 12.2 ms, faiss_flat 0.24 ms, faiss_hnsw 0.36 ms. README section "Vector database backends" filled.
 
 **PROJECT COMPLETE (2026-09-30).** The scheduled task RAG_eval_queue no longer exists.
 

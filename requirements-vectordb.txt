@@ -1,0 +1,6 @@
+# Optional vector-database dense backends (src/vector_backends.py). Not needed for the default
+# NumPy backend or for any reported result. Install on top of requirements.txt, keeping its pins:
+#   .venv\Scripts\python -m pip install -r requirements-vectordb.txt -c requirements.txt
+# Both ship Windows wheels for the venv's Python (chromadb: cp39-abi3; faiss-cpu: cp313 + cp314).
+chromadb==1.5.9
+faiss-cpu==1.15.1

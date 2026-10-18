@@ -1,0 +1,5 @@
+backend,chunk_size,n_vectors,dim,load_s,build_s,disk_mb,params,note
+numpy,256,46816,384,0.075,,68.5782470703125,,emb.npy from build_index.py (embedding time not counted)
+chroma,256,46816,384,1.103,17.681,112.76498031616211,"{""space"": ""cosine"", ""M"": 16, ""ef_construction"": 200, ""ef_search"": 200, ""batch_size"": 4096}",built 2026-10-18 01:22:43
+faiss_flat,256,46816,384,0.209,0.058,69.87124061584473,{},built 2026-10-18 01:22:43
+faiss_hnsw,256,46816,384,0.188,5.931,82.025465965271,"{""M"": 32, ""ef_construction"": 200, ""ef_search"": 128}",built 2026-10-18 01:22:49

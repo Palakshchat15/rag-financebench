@@ -17,3 +17,6 @@ data/cache/
 data/index/
 data/processed/
 data/pdfs/
+# Optional vector DB backends (rebuilt by scripts/build_vector_index.py; also covered by data/index/)
+data/index/chroma/
+data/index/faiss/
